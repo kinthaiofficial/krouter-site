@@ -1,0 +1,19 @@
+{
+  "name": "krouter-site",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "astro": "^5.10.1",
+    "@astrojs/sitemap": "^3.3.1",
+    "@fontsource-variable/geist": "^5.2.5",
+    "@fontsource/geist-mono": "^5.2.5",
+    "@tailwindcss/vite": "^4.1.8",
+    "tailwindcss": "^4.1.8",
+    "marked": "^15.0.12"
+  }
+}

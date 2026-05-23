@@ -1,0 +1,222 @@
+---
+import Base from '../../layouts/Base.astro';
+import DownloadButton from '../../components/DownloadButton.astro';
+import { t } from '../../i18n/index';
+import { getLatestRelease, assetUrl, releaseTag } from '../../lib/releases';
+
+const lang = 'zh';
+const i = t(lang);
+
+const release = await getLatestRelease();
+const version = releaseTag(release);
+const macosUrl = assetUrl(release, /\.dmg$/i);
+const githubUrl = `https://github.com/kinthaiofficial/krouter/releases/tag/${version}`;
+
+const agents = [
+  { name: 'Claude Code', note: 'Anthropic' },
+  { name: 'Cursor', note: 'Anysphere' },
+  { name: 'OpenClaw', note: 'kinthai.ai' },
+  { name: 'Hermes', note: '开源' },
+  { name: 'Cline', note: '社区' },
+  { name: 'Aider', note: '社区' },
+];
+
+const providers = [
+  'Anthropic', 'OpenAI', 'Google Gemini', 'DeepSeek',
+  'Groq', '通义千问 (阿里)', 'MiniMax', 'Moonshot',
+  'Mistral', 'GLM (智谱)', 'Together AI', 'OpenRouter',
+];
+---
+
+<Base
+  lang={lang}
+  title="KRouter — 面向 AI Agent 的智能 LLM 路由器"
+  description="自动将 Claude Code、Cursor 和 OpenClaw 路由到最便宜的 LLM Provider，每次 AI Agent 请求节省 50–80%。"
+  canonical="https://krouter.kinthai.ai/zh/"
+>
+  <!-- ── HERO ─────────────────────────────────────────── -->
+  <section class="hero section">
+    <div class="container hero-inner">
+      <div class="hero-left">
+        <p class="eyebrow">{i.hero.eyebrow}</p>
+        <h1 class="display hero-h1">{i.hero.h1}</h1>
+        <p class="body-lg hero-sub">{i.hero.sub}</p>
+        <div class="hero-ctas">
+          <DownloadButton href={macosUrl} label={i.hero.cta_primary} variant="primary" icon="apple" />
+          <a href="https://github.com/kinthaiofficial/krouter" class="btn-secondary" target="_blank" rel="noopener noreferrer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            {i.hero.cta_secondary}
+          </a>
+        </div>
+        <p class="hero-version caption">最新版本：<a href={githubUrl} target="_blank" rel="noopener noreferrer">{version}</a></p>
+      </div>
+
+      <div class="hero-right" aria-hidden="true">
+        <div class="code-block terminal-demo">
+          <div class="terminal-line"><span class="c-dim">$</span> <span class="c-green">krouter</span> start</div>
+          <div class="terminal-line c-dim">→ 扫描 agent 配置中...</div>
+          <div class="terminal-line c-dim">  ✓ claude-code  <span class="c-accent">anthropic</span></div>
+          <div class="terminal-line c-dim">  ✓ cursor       <span class="c-accent">openai-compat</span></div>
+          <div class="terminal-line c-dim">  ✓ openclaw     <span class="c-accent">anthropic</span></div>
+          <div class="terminal-line">&nbsp;</div>
+          <div class="terminal-line"><span class="c-dim">→ 路由请求</span> <span class="c-muted">claude-3-5-sonnet</span></div>
+          <div class="terminal-line c-dim">  anthropic          $3.00/M tok</div>
+          <div class="terminal-line c-dim">  openrouter         $3.00/M tok</div>
+          <div class="terminal-line c-dim">  deepseek-v3        $0.27/M tok  <span class="c-green">✓</span></div>
+          <div class="terminal-line">&nbsp;</div>
+          <div class="terminal-line c-green">→ 节省 $0.0031 <span class="c-dim">（便宜 91%）</span></div>
+          <div class="terminal-line c-dim">  2,140 tok · 4 ms</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- ── FEATURES ───────────────────────────────────────── -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="display-md">{i.features.heading}</h2>
+        <p class="body-lg section-sub">{i.features.sub}</p>
+      </div>
+      <div class="feature-grid">
+        {i.features.items.map((item, idx) => (
+          <div class="feature-card">
+            <div class="feature-card__icon">
+              {idx === 0 && <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>}
+              {idx === 1 && <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>}
+              {idx === 2 && <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>}
+              {idx === 3 && <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>}
+              {idx === 4 && <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>}
+            </div>
+            <h3 class="display-sm feature-title">{item.title}</h3>
+            <p class="body">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- ── AGENTS ─────────────────────────────────────────── -->
+  <section class="section" id="agents">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="display-md">{i.agents.heading}</h2>
+        <p class="body-lg section-sub">{i.agents.sub}</p>
+      </div>
+      <div class="badge-grid agents-grid">
+        {agents.map((agent) => (
+          <div class="badge badge-agent">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            <strong>{agent.name}</strong>
+            <span class="caption">{agent.note}</span>
+          </div>
+        ))}
+      </div>
+      <p class="caption agents-note">{i.agents.note}</p>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- ── PROVIDERS ──────────────────────────────────────── -->
+  <section class="section" id="providers">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="display-md">{i.providers.heading}</h2>
+        <p class="body-lg section-sub">{i.providers.sub}</p>
+      </div>
+      <div class="badge-grid">
+        {providers.map((p) => (
+          <div class="badge">{p}</div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- ── HOW IT WORKS ───────────────────────────────────── -->
+  <section class="section" id="how-it-works">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="display-md">{i.how.heading}</h2>
+      </div>
+      <div class="steps">
+        {i.how.steps.map((step) => (
+          <div class="step">
+            <span class="step__num">{step.num}</span>
+            <h3 class="display-sm step-title">{step.title}</h3>
+            <p class="body">{step.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- ── CTA STRIP ──────────────────────────────────────── -->
+  <section class="section-sm">
+    <div class="container">
+      <div class="cta-strip">
+        <h2 class="display-md cta-heading">{i.cta.heading}</h2>
+        <p class="body-lg cta-sub" style="color: oklch(82% 0.005 148)">{i.cta.sub}</p>
+        <div class="cta-actions">
+          <a href="/zh/download" class="btn-primary">{i.cta.download} {version}</a>
+          <a href="https://github.com/kinthaiofficial/krouter" class="btn-secondary" target="_blank" rel="noopener noreferrer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            {i.cta.github}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-16);
+    align-items: center;
+    padding-top: calc(var(--space-20) + 3.5rem);
+  }
+  .hero-h1 { margin-block: var(--space-4) var(--space-6); }
+  .hero-sub { max-width: 38ch; margin-bottom: var(--space-8); }
+  .hero-ctas { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
+  .hero-version { margin-top: var(--space-4); }
+  .hero-version a { color: var(--color-accent-text); text-decoration: none; font-family: var(--font-mono); }
+  .terminal-demo { font-size: 0.8rem; line-height: 1.85; }
+  .terminal-line { white-space: pre; }
+  .section-head { margin-bottom: var(--space-12); max-width: 40rem; }
+  .section-sub { margin-top: var(--space-4); }
+  .feature-title { margin-block: var(--space-2) var(--space-3); }
+  .agents-grid { margin-bottom: var(--space-6); }
+  .badge-agent { gap: var(--space-2); background: var(--color-accent-dim); border-color: oklch(85% 0.030 148); color: var(--color-ink-2); }
+  .badge-agent svg { color: var(--color-accent-text); flex-shrink: 0; }
+  .badge-agent strong { color: var(--color-ink); font-weight: 600; }
+  .badge-agent .caption { color: var(--color-muted); margin-left: var(--space-1); }
+  .agents-note { margin-top: var(--space-6); max-width: 52ch; }
+  .step-title { margin-block: var(--space-2) var(--space-3); }
+  .cta-heading { margin-bottom: var(--space-3); }
+  .cta-sub { margin-bottom: var(--space-8); }
+  .cta-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); justify-content: center; align-items: center; }
+  .cta-strip .btn-secondary { color: oklch(88% 0.005 148); border-color: oklch(36% 0.008 148); background: transparent; }
+  .cta-strip .btn-secondary:hover { background: oklch(22% 0.010 148); border-color: oklch(50% 0.007 148); }
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; gap: var(--space-8); }
+    .hero-right { order: -1; }
+    .terminal-demo { font-size: 0.75rem; }
+  }
+  @media (max-width: 640px) {
+    .hero-inner { padding-top: calc(var(--space-16) + 3.5rem); }
+    .hero-sub { max-width: 100%; }
+    .section-head { max-width: 100%; }
+    .cta-actions { flex-direction: column; }
+    .cta-actions a { width: 100%; justify-content: center; }
+  }
+</style>

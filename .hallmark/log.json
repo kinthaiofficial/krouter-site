@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "runs": [
+    {
+      "date": "2026-05-23",
+      "macrostructure": "Marquee Hero",
+      "genre": "modern-minimal",
+      "theme": "custom-green-anchor",
+      "nav": "N5",
+      "footer": "Ft2",
+      "critique": "P5 H4 E4 S5 R5 V4"
+    }
+  ]
+}

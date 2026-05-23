@@ -1,0 +1,93 @@
+---
+import Base from '../../layouts/Base.astro';
+import DownloadButton from '../../components/DownloadButton.astro';
+import { t } from '../../i18n/index';
+import { getLatestRelease, assetUrl, releaseTag } from '../../lib/releases';
+
+const lang = 'zh';
+const i = t(lang);
+
+const release = await getLatestRelease();
+const version = releaseTag(release);
+const macosUrl = assetUrl(release, /\.dmg$/i);
+const linuxDebUrl = assetUrl(release, /\.deb$/i);
+const linuxRpmUrl = assetUrl(release, /\.rpm$/i);
+const windowsUrl = assetUrl(release, /\.exe$/i);
+const githubUrl = `https://github.com/kinthaiofficial/krouter/releases/tag/${version}`;
+---
+
+<Base
+  lang={lang}
+  title="下载 KRouter — macOS、Linux、Windows"
+  description="下载最新版 KRouter，支持 macOS、Linux 和 Windows。免费开源。"
+>
+  <section class="section" style="padding-top: calc(var(--space-20) + 3.5rem);">
+    <div class="container" style="max-width: 48rem;">
+      <p class="eyebrow" style="margin-bottom: var(--space-4);">{i.download.latest}：<a href={githubUrl} style="color: var(--color-accent-text); font-family: var(--font-mono); text-decoration: none;">{version}</a></p>
+      <h1 class="display-md" style="margin-bottom: var(--space-4);">{i.download.heading}</h1>
+      <p class="body-lg" style="margin-bottom: var(--space-12);">{i.download.sub}</p>
+
+      <div class="download-grid">
+        <div class="download-card">
+          <div class="download-card__icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          </div>
+          <h2 class="display-sm">macOS</h2>
+          <p class="caption" style="margin-block: var(--space-2) var(--space-6);">支持 Apple Silicon 和 Intel</p>
+          <DownloadButton href={macosUrl} label={i.download.macos} variant="primary" icon="apple" />
+        </div>
+
+        <div class="download-card">
+          <div class="download-card__icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.97-.464 1.208-.946.587-.533 1.179-2.939 1.488-3.976.326-1.078.3-1.439.195-1.798-.055-.188-.137-.365-.237-.817a7.345 7.345 0 01-.115-1.212c0-.963.3-2.024 1.203-2.967 1.87-1.943 2.19-3.79 1.568-5.338-.605-1.514-2.02-2.73-3.73-3.077-.283-.072-.577-.109-.881-.109z"/></svg>
+          </div>
+          <h2 class="display-sm">Linux</h2>
+          <p class="caption" style="margin-block: var(--space-2) var(--space-6);">DEB 和 RPM 安装包</p>
+          <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+            <DownloadButton href={linuxDebUrl} label={i.download.linux_deb} variant="primary" icon="linux" />
+            <DownloadButton href={linuxRpmUrl} label={i.download.linux_rpm} variant="secondary" icon="linux" />
+          </div>
+        </div>
+
+        <div class="download-card">
+          <div class="download-card__icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
+          </div>
+          <h2 class="display-sm">Windows</h2>
+          <p class="caption" style="margin-block: var(--space-2) var(--space-6);">Windows 10 / 11 x64</p>
+          <DownloadButton href={windowsUrl} label={i.download.windows} variant="primary" icon="windows" />
+        </div>
+      </div>
+
+      <div style="margin-top: var(--space-12); display: flex; gap: var(--space-6); flex-wrap: wrap;">
+        <a href={githubUrl} class="caption" style="color: var(--color-accent-text); text-decoration: none;" target="_blank" rel="noopener noreferrer">{i.download.checksums} →</a>
+        <a href="/zh/changelog" class="caption" style="color: var(--color-muted); text-decoration: none;">{i.download.changelog} →</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .download-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+    gap: var(--space-4);
+  }
+  .download-card {
+    background: var(--color-paper);
+    border: 1px solid var(--color-rule-2);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+  }
+  .download-card__icon {
+    width: 3.5rem;
+    height: 3.5rem;
+    background: var(--color-accent-dim);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-4);
+    color: var(--color-accent-text);
+  }
+</style>

@@ -1,0 +1,67 @@
+---
+import type { Lang } from '../i18n/index';
+import type { en } from '../i18n/en';
+
+interface Props {
+  lang: Lang;
+  i: typeof en;
+}
+
+const { i } = Astro.props;
+---
+
+<footer class="site-footer">
+  <hr class="section-divider" />
+  <div class="container footer-inner">
+    <span class="footer-copy">{i.footer.copy} · {i.footer.tagline}</span>
+    <div class="footer-links">
+      <a href="https://github.com/kinthaiofficial/krouter" target="_blank" rel="noopener noreferrer">{i.footer.github}</a>
+      <a href="https://github.com/kinthaiofficial/krouter/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">{i.footer.license}</a>
+      <a href="/changelog">Changelog</a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding-bottom: var(--space-6);
+  }
+
+  .footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding-top: var(--space-6);
+  }
+
+  .footer-copy {
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: var(--space-6);
+  }
+
+  .footer-links a {
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .footer-links a:hover { color: var(--color-ink); }
+
+  .footer-links a:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  @media (max-width: 640px) {
+    .footer-inner { flex-direction: column; align-items: flex-start; }
+  }
+</style>

@@ -1,0 +1,44 @@
+---
+import type { Lang } from '../i18n/index';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const path = Astro.url.pathname;
+
+const enPath = path.startsWith('/zh') ? (path.replace(/^\/zh/, '') || '/') : path;
+const zhPath = path.startsWith('/zh') ? path : '/zh' + path;
+const altPath = lang === 'en' ? zhPath : enPath;
+const altLabel = lang === 'en' ? '中文' : 'EN';
+---
+
+<a href={altPath} class="lang-switch" aria-label={`Switch to ${altLabel}`}>
+  {altLabel}
+</a>
+
+<style>
+  .lang-switch {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-ink-2);
+    text-decoration: none;
+    padding: 0.3125rem 0.625rem;
+    border-radius: 9999px;
+    border: 1px solid var(--color-rule);
+    transition: color 0.15s ease, border-color 0.15s ease;
+    white-space: nowrap;
+  }
+
+  .lang-switch:hover {
+    color: var(--color-ink);
+    border-color: var(--color-rule);
+    background: var(--color-paper-2);
+  }
+
+  .lang-switch:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+</style>

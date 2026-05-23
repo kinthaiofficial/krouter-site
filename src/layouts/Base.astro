@@ -1,0 +1,70 @@
+---
+import '../styles/tokens.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import type { Lang } from '../i18n/index';
+import { t, getAlternateLang } from '../i18n/index';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  canonical?: string;
+  ogImage?: string;
+}
+
+const { lang, title, description, canonical, ogImage } = Astro.props;
+const i = t(lang);
+const altLang = getAlternateLang(lang);
+const canonicalUrl = canonical ?? Astro.url.href;
+const ogUrl = ogImage ?? '/og-image.png';
+const altPath = lang === 'en'
+  ? '/zh' + Astro.url.pathname
+  : Astro.url.pathname.replace(/^\/zh/, '') || '/';
+---
+
+<!doctype html>
+<html lang={lang} dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content={description} />
+  <title>{title}</title>
+
+  <link rel="canonical" href={canonicalUrl} />
+  <link rel="alternate" hreflang={lang} href={canonicalUrl} />
+  <link rel="alternate" hreflang={altLang} href={`https://krouter.kinthai.ai${altPath}`} />
+  <link rel="alternate" hreflang="x-default" href="https://krouter.kinthai.ai/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:image" content={`https://krouter.kinthai.ai${ogUrl}`} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={`https://krouter.kinthai.ai${ogUrl}`} />
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="sitemap" href="/sitemap-index.xml" />
+</head>
+<body>
+  <Nav lang={lang} i={i} />
+  <main>
+    <slot />
+  </main>
+  <Footer lang={lang} i={i} />
+
+  <script>
+    // Persist language preference
+    const lang = document.documentElement.lang;
+    if (lang) localStorage.setItem('krouter-lang', lang);
+  </script>
+</body>
+</html>
