@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Build
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
     types: [krouter-release]
 
 jobs:
-  build-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -37,16 +37,11 @@ jobs:
       - name: Copy data directory
         run: |
           mkdir -p dist/data
-          # token_price_sub.json is synced separately by sync-pricing.yml
-          # Place a stub if not present so nginx can serve a 404 cleanly
           echo '{}' > dist/data/.gitkeep
 
-      - name: Deploy via rsync over SSH
-        uses: burnett01/rsync-deployments@7.0.1
+      - name: Upload dist artifact
+        uses: actions/upload-artifact@v4
         with:
-          switches: -avz --delete
+          name: krouter-site-dist
           path: dist/
-          remote_path: /var/www/krouter.kinthai.ai/
-          remote_host: ${{ secrets.DEPLOY_HOST }}
-          remote_user: ${{ secrets.DEPLOY_USER }}
-          remote_key: ${{ secrets.DEPLOY_KEY }}
+          retention-days: 30
