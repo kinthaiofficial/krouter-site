@@ -15,11 +15,7 @@ const base = lang === 'zh' ? '/zh' : '';
 <header class="nav-wrap" role="banner">
   <nav class="nav-pill" aria-label="Main navigation">
     <a href={`${base}/`} class="nav-logo" aria-label="krouter home">
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-        <!-- K letter mark in brand green -->
-        <rect width="28" height="28" rx="7" fill="oklch(15% 0.010 148)"/>
-        <path d="M8 7h3v5.5L16.5 7H20l-6.2 6.2L20.5 21H17l-5-5.8-1 .9V21H8V7z" fill="oklch(77% 0.188 148)"/>
-      </svg>
+      <img src="/favicon.png" width="28" height="28" alt="" aria-hidden="true" class="nav-logo__icon" />
       <span class="nav-logo__name">krouter</span>
     </a>
 
@@ -85,6 +81,11 @@ const base = lang === 'zh' ? '/zh' : '';
     padding: 0.25rem 0.5rem;
     border-radius: 9999px;
     flex-shrink: 0;
+  }
+
+  .nav-logo__icon {
+    display: block;
+    border-radius: 7px;
   }
 
   .nav-logo__name {
