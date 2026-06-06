@@ -53,22 +53,16 @@ const providers = [
         <p class="hero-version caption">Latest: <a href={githubUrl} target="_blank" rel="noopener noreferrer">{version}</a></p>
       </div>
 
-      <div class="hero-right" aria-hidden="true">
-        <div class="code-block terminal-demo">
-          <div class="terminal-line"><span class="c-dim">$</span> <span class="c-green">krouter</span> start</div>
-          <div class="terminal-line c-dim">→ scanning agent configs...</div>
-          <div class="terminal-line c-dim">  ✓ claude-code  <span class="c-accent">anthropic</span></div>
-          <div class="terminal-line c-dim">  ✓ cursor       <span class="c-accent">openai-compat</span></div>
-          <div class="terminal-line c-dim">  ✓ openclaw     <span class="c-accent">anthropic</span></div>
-          <div class="terminal-line">&nbsp;</div>
-          <div class="terminal-line"><span class="c-dim">→ routing request</span> <span class="c-muted">claude-3-5-sonnet</span></div>
-          <div class="terminal-line c-dim">  anthropic          $3.00/M tok</div>
-          <div class="terminal-line c-dim">  openrouter         $3.00/M tok</div>
-          <div class="terminal-line c-dim">  deepseek-v3        $0.27/M tok  <span class="c-green">✓</span></div>
-          <div class="terminal-line">&nbsp;</div>
-          <div class="terminal-line c-green">→ saved $0.0031 <span class="c-dim">(91% cheaper)</span></div>
-          <div class="terminal-line c-dim">  2,140 tok · 4 ms</div>
-        </div>
+      <div class="hero-right">
+        <img
+          class="hero-shot"
+          src="/product-router.png"
+          width="1946"
+          height="990"
+          loading="eager"
+          decoding="async"
+          alt="KRouter dashboard showing a live routing decision: an Anthropic claude-haiku request routed to MiniMax, 76% cheaper."
+        />
       </div>
     </div>
   </section>
@@ -220,12 +214,13 @@ const providers = [
 
   .hero-version a:hover { text-decoration: underline; }
 
-  .terminal-demo {
-    font-size: 0.8rem;
-    line-height: 1.85;
+  .hero-shot {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-rule-2);
+    box-shadow: var(--shadow-md);
   }
-
-  .terminal-line { white-space: pre; }
 
   /* Section heads */
   .section-head {
@@ -293,7 +288,6 @@ const providers = [
       gap: var(--space-8);
     }
     .hero-right { order: -1; }
-    .terminal-demo { font-size: 0.75rem; }
   }
 
   @media (max-width: 640px) {
