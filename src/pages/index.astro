@@ -54,15 +54,19 @@ const providers = [
       </div>
 
       <div class="hero-right">
-        <img
-          class="hero-shot"
-          src="/product-router.png"
-          width="1946"
-          height="990"
-          loading="eager"
-          decoding="async"
-          alt="KRouter dashboard showing a live routing decision: an Anthropic claude-haiku request routed to MiniMax, 76% cheaper."
-        />
+        <picture>
+          <source srcset="/product-router.webp" type="image/webp" />
+          <img
+            class="hero-shot"
+            src="/product-router.png"
+            width="1456"
+            height="741"
+            loading="eager"
+            decoding="async"
+            fetchpriority="high"
+            alt="KRouter dashboard showing a live routing decision: an Anthropic claude-haiku request routed to MiniMax, 76% cheaper."
+          />
+        </picture>
       </div>
     </div>
   </section>
