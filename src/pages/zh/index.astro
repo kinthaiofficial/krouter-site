@@ -51,22 +51,20 @@ const providers = [
         <p class="hero-version caption">最新版本：<a href={githubUrl} target="_blank" rel="noopener noreferrer">{version}</a></p>
       </div>
 
-      <div class="hero-right" aria-hidden="true">
-        <div class="code-block terminal-demo">
-          <div class="terminal-line"><span class="c-dim">$</span> <span class="c-green">krouter</span> start</div>
-          <div class="terminal-line c-dim">→ 扫描 agent 配置中...</div>
-          <div class="terminal-line c-dim">  ✓ claude-code  <span class="c-accent">anthropic</span></div>
-          <div class="terminal-line c-dim">  ✓ cursor       <span class="c-accent">openai-compat</span></div>
-          <div class="terminal-line c-dim">  ✓ openclaw     <span class="c-accent">anthropic</span></div>
-          <div class="terminal-line">&nbsp;</div>
-          <div class="terminal-line"><span class="c-dim">→ 路由请求</span> <span class="c-muted">claude-3-5-sonnet</span></div>
-          <div class="terminal-line c-dim">  anthropic          $3.00/M tok</div>
-          <div class="terminal-line c-dim">  openrouter         $3.00/M tok</div>
-          <div class="terminal-line c-dim">  deepseek-v3        $0.27/M tok  <span class="c-green">✓</span></div>
-          <div class="terminal-line">&nbsp;</div>
-          <div class="terminal-line c-green">→ 节省 $0.0031 <span class="c-dim">（便宜 91%）</span></div>
-          <div class="terminal-line c-dim">  2,140 tok · 4 ms</div>
-        </div>
+      <div class="hero-right">
+        <picture>
+          <source srcset="/product-router.webp" type="image/webp" />
+          <img
+            class="hero-shot"
+            src="/product-router.png"
+            width="1456"
+            height="741"
+            loading="eager"
+            decoding="async"
+            fetchpriority="high"
+            alt="KRouter 仪表盘展示实时路由决策：一个 Anthropic claude-haiku 请求被路由到 MiniMax，成本降低 76%。"
+          />
+        </picture>
       </div>
     </div>
   </section>
@@ -190,8 +188,13 @@ const providers = [
   .hero-ctas { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
   .hero-version { margin-top: var(--space-4); }
   .hero-version a { color: var(--color-accent-text); text-decoration: none; font-family: var(--font-mono); }
-  .terminal-demo { font-size: 0.8rem; line-height: 1.85; }
-  .terminal-line { white-space: pre; }
+  .hero-shot {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-rule-2);
+    box-shadow: var(--shadow-md);
+  }
   .section-head { margin-bottom: var(--space-12); max-width: 40rem; }
   .section-sub { margin-top: var(--space-4); }
   .feature-title { margin-block: var(--space-2) var(--space-3); }
@@ -210,7 +213,6 @@ const providers = [
   @media (max-width: 900px) {
     .hero-inner { grid-template-columns: 1fr; gap: var(--space-8); }
     .hero-right { order: -1; }
-    .terminal-demo { font-size: 0.75rem; }
   }
   @media (max-width: 640px) {
     .hero-inner { padding-top: calc(var(--space-16) + 3.5rem); }
